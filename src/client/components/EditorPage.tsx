@@ -131,7 +131,7 @@ const EditorPage: React.FunctionComponent<IProps> = (props: IProps) => {
     if (!documentId) {
       const newFile: CanonFile = {
         title: "",
-        kind: "",
+        kind: null,
         user: props.user,
         version: 0,
         annotations: [],
@@ -196,7 +196,7 @@ const EditorPage: React.FunctionComponent<IProps> = (props: IProps) => {
             <DocumentKindSelect
               required={true}
               disabled={!isNewDocument}
-              value={activeDocument.file.kind}
+              value={activeDocument.file.kind || ""}
               onChange={(value) =>
                 makeEdit(
                   {

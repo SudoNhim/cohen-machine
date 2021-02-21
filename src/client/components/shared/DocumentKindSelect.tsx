@@ -36,7 +36,7 @@ const kinds: DocumentKind[] = [
 ];
 
 interface IProps {
-  value: DocumentKind;
+  value: DocumentKind | "";
   required?: boolean;
   disabled?: boolean;
   onChange: (value: DocumentKind) => void;
