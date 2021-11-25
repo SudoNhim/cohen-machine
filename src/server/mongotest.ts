@@ -7,8 +7,8 @@ import { ChatMessage } from "./models/ChatMessage";
 import { DocUpdate, IDocUpdate } from "./models/DocUpdate";
 
 export async function createTestDatabase(dbName: string): Promise<void> {
-  const mongod = new MongoMemoryServer({ instance: { dbName } });
-  mongoose.connect(await mongod.getUri());
+  const mongod = await MongoMemoryServer.create({ instance: { dbName } });
+  mongoose.connect(mongod.getUri());
 
   await Account.register(
     new Account({ username: "augustine", email: "augustine@hippo" }),

@@ -1,14 +1,17 @@
 import http from "http";
 
+import { Token } from "cohen-db/schema";
 import { RequestHandler } from "express";
+import { LeanDocument } from "mongoose";
 import { Socket, Server as SocketIOServer } from "socket.io";
 
+import { IChatMessage } from "../shared/ApiTypes";
 import { DeserializeDocRef } from "../shared/util";
-import { ChatMessage, IChatMessage } from "./models/ChatMessage";
+import { ChatMessage, IChatMessageDocument } from "./models/ChatMessage";
 
 import _socketio = require("socket.io");
 
-const socketio = (_socketio as unknown) as (
+const socketio = _socketio as unknown as (
   server: http.Server
 ) => SocketIOServer;
 
@@ -34,10 +37,15 @@ export function setupSocketIo(
             "init",
             messages
               .map((msg) => msg.toObject())
-              .map((msg: IChatMessage) => {
+              .map((msg: LeanDocument<IChatMessageDocument>) => {
+                const msgOut: IChatMessage = {
+                  tokens: msg.tokens,
+                  user: msg.user,
+                };
+
                 // This is to handle legacy format docref messages
-                if (msg.content) {
-                  msg.tokens = msg.content.map((tok) => {
+                if (msg.content && msg.content.length) {
+                  msgOut.tokens = msg.content.map((tok) => {
                     if (tok.kind === "docref") {
                       return {
                         kind: "reference",
@@ -47,9 +55,9 @@ export function setupSocketIo(
                       return tok;
                     }
                   });
-                  msg.content = undefined;
-                  return msg;
                 }
+
+                return msgOut;
               })
           );
         });
@@ -60,7 +68,7 @@ export function setupSocketIo(
         const message = new ChatMessage({
           time: new Date(),
           user: username,
-          content: msg.content,
+          tokens: msg.tokens,
         });
 
         // Save the message to the database.
