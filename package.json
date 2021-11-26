@@ -30,7 +30,7 @@
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@types/body-parser": "^1.19.0",
     "body-parser": "^1.19.0",
-    "cohen-db": "SudoNhim/cohen-db#v2release ",
+    "cohen-db": "SudoNhim/cohen-db#1b84605",
     "cookie-parser": "^1.4.5",
     "ejs": "^2.7.4",
     "express": "4.17.1",
