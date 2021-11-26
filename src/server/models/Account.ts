@@ -57,10 +57,7 @@ interface PassportLocalModel<T extends mongoose.Document>
     password: string,
     cb: (err: any, account: any) => void
   ): void;
-  findByUsername(
-    username: string,
-    selectHashSaltFields: boolean
-  ): mongoose.Query<T>;
+  findByUsername(username: string, selectHashSaltFields: boolean): any;
   findByUsername(
     username: string,
     selectHashSaltFields: boolean,
@@ -72,6 +69,7 @@ interface PassportLocalModel<T extends mongoose.Document>
 export interface IAccount extends PassportLocalDocument {
   username: string;
   email: string;
+  password: string;
 }
 
 const AccountSchema = new mongoose.Schema<IAccount>({

@@ -67,8 +67,9 @@ export function apiRouter() {
     res.end();
   });
 
+  // special API route used to populate database repo
   router.get("/updates", async (req, res) => {
-    const updates: IDocUpdate[] = [];
+    const updates: any[] = [];
     for await (const update of await DocUpdate.find()) {
       const { _id, __v, ...file } = update.toObject();
       updates.push(file);
