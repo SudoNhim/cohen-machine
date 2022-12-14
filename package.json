@@ -33,7 +33,7 @@
     "cohen-db": "SudoNhim/cohen-db#25d9bfc",
     "cookie-parser": "^1.4.5",
     "ejs": "^2.7.4",
-    "express": "4.17.1",
+    "express": "4.17.3",
     "express-session": "1.17.1",
     "javascript-time-ago": "^2.3.4",
     "lunr": "^2.3.9",
